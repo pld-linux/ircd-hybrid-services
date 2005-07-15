@@ -1,0 +1,2 @@
+# Nice level for hybserv
+SERVICE_RUN_NICE_LEVEL="+0"

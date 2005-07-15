@@ -1,0 +1,18 @@
+--- hybserv-bg/source/hostserv.c.orig	2003-02-28 18:57:16.000000000 +0100
++++ hybserv-bg/source/hostserv.c	2005-07-07 17:13:33.000000000 +0200
+@@ -1401,6 +1401,7 @@
+ 		av[1]);
+ 
+ skip:
++{
+ #ifdef BNET
+ 
+ 	notice(n_HostServ, lptr->nick, "Sending SVSHOST to your server...");
+@@ -1421,6 +1422,7 @@
+ 		VhostSuffix? VhostSuffix : "");
+ 
+ #endif 
++}
+ 
+ } /* v_spoof() */
+ 

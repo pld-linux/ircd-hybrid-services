@@ -1,0 +1,104 @@
+#!/bin/sh
+#
+# hybserv	A services daemon for ircd-hybrid
+#
+# chkconfig:	345 25 90
+#
+# description:	Hybserv provides chanserv, nickserv etc...for
+#		EFNet ircd-hybrid server.
+#
+# $Id$
+
+
+# Source function library
+. /etc/rc.d/init.d/functions
+
+# Get network config
+. /etc/sysconfig/network
+
+# Get service config - may override defaults
+[ -f /etc/sysconfig/hybserv ] && . /etc/sysconfig/hybserv
+
+# Check that networking is up.
+if is_yes "${NETWORKING}"; then
+	if [ ! -f /var/lock/subsys/network ]; then
+		# nls "ERROR: Networking is down. %s can't be run." hybserv
+		msg_network_down hybserv
+		exit 1
+	fi
+else
+	exit 0
+fi
+
+#Check that ircd is running.
+if [ ! -f /var/lock/subsys/ircd ] && [ "$1" != "stop" ]; then
+    nls "ERROR: ircd isin't running, so %s can't start." hybserv && exit 0
+fi
+
+# See how we were called.
+case "$1" in
+  start)
+	# Check if the service is already running?
+	if [ ! -f /var/lock/subsys/hybserv ]; then
+		# show "Starting %s service" hybserv
+		msg_starting hybserv
+		daemon hybserv
+		RETVAL=$?
+		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/hybserv
+	else
+		# show "%s service is already running." hybserv
+		msg_already_running hybserv
+	fi
+	;;
+  stop)
+	if [ -f /var/lock/subsys/hybserv ]; then
+		# Stop daemons.
+		# show "Stopping %s service" hybserv
+		msg_stopping hybserv
+		killproc hybserv
+		rm -f /var/lock/subsys/hybserv
+	else
+		# show "%s service is not running." hybserv
+		msg_not_running hybserv
+	fi
+	;;
+  restart)
+	$0 stop
+	$0 start
+	exit $?
+	;;
+  reload)
+	if [ -f /var/lock/subsys/hybserv ]; then
+		# show "Reload %s service" hybserv
+		msg_reloading hybserv
+		killproc hybserv -HUP
+		RETVAL=$?
+	else
+		# show "%s service is not running." hybserv
+		msg_not_running hybserv >&2
+		RETVAL=7
+	fi
+	;;
+  force-reload)
+	# if program allows reloading without stopping
+	$0 reload
+
+	# or if it doesn't
+	$0 restart
+
+	exit $?
+	;;
+  status)
+	status hybserv
+	RETVAL=$?
+	;;
+  *)
+	# show "Usage: %s {start|stop|restart|reload|force-reload|status}"
+	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
+	exit 3
+esac
+
+exit $RETVAL
+
+# This must be last line !
+# vi:syntax=sh:tw=78:ts=8:sw=4
