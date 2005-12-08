@@ -22,7 +22,6 @@
 # Check that networking is up.
 if is_yes "${NETWORKING}"; then
 	if [ ! -f /var/lock/subsys/network ]; then
-		# nls "ERROR: Networking is down. %s can't be run." hybserv
 		msg_network_down hybserv
 		exit 1
 	fi
@@ -40,25 +39,21 @@ case "$1" in
   start)
 	# Check if the service is already running?
 	if [ ! -f /var/lock/subsys/hybserv ]; then
-		# show "Starting %s service" hybserv
 		msg_starting hybserv
 		daemon hybserv
 		RETVAL=$?
 		[ $RETVAL -eq 0 ] && touch /var/lock/subsys/hybserv
 	else
-		# show "%s service is already running." hybserv
 		msg_already_running hybserv
 	fi
 	;;
   stop)
 	if [ -f /var/lock/subsys/hybserv ]; then
 		# Stop daemons.
-		# show "Stopping %s service" hybserv
 		msg_stopping hybserv
 		killproc hybserv
 		rm -f /var/lock/subsys/hybserv
 	else
-		# show "%s service is not running." hybserv
 		msg_not_running hybserv
 	fi
 	;;
@@ -69,12 +64,10 @@ case "$1" in
 	;;
   reload)
 	if [ -f /var/lock/subsys/hybserv ]; then
-		# show "Reload %s service" hybserv
 		msg_reloading hybserv
 		killproc hybserv -HUP
 		RETVAL=$?
 	else
-		# show "%s service is not running." hybserv
 		msg_not_running hybserv >&2
 		RETVAL=7
 	fi
@@ -93,7 +86,6 @@ case "$1" in
 	RETVAL=$?
 	;;
   *)
-	# show "Usage: %s {start|stop|restart|reload|force-reload|status}"
 	msg_usage "$0 {start|stop|restart|reload|force-reload|status}"
 	exit 3
 esac
