@@ -8,7 +8,7 @@
 %define		realname hybserv-bg
 %define		shortname hybserv
 Summary:	Services for ircd-hybrid
-Summary(pl):	Us³ugi dla ircd-hybrid
+Summary(pl.UTF-8):   UsÅ‚ugi dla ircd-hybrid
 Name:		ircd-hybrid-services
 Version:	1.0
 Release:	0.1
@@ -32,11 +32,11 @@ services, designed to complement ircd-hybrid-7-bg; its most notable
 features are HostServ, SeenServ, nickname change enforcement, dual
 language help system.
 
-%description -l pl
-Hybserver-bg to wielce ulepszona wersja popularnych us³ug dla IRC-a
-hybserv, zaprojektowanego by dope³niæ ircd-hybrid-7-bg; jego godne
+%description -l pl.UTF-8
+Hybserver-bg to wielce ulepszona wersja popularnych usÅ‚ug dla IRC-a
+hybserv, zaprojektowanego by dopeÅ‚niÄ‡ ircd-hybrid-7-bg; jego godne
 odnotowania cechy to HostServ, SeenServ, wymuszenie zmiany nicka,
-dwujêzyczna pomoc.
+dwujÄ™zyczna pomoc.
 
 %prep
 %setup -q -n %{realname}
