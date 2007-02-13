@@ -8,7 +8,7 @@
 %define		realname hybserv-bg
 %define		shortname hybserv
 Summary:	Services for ircd-hybrid
-Summary(pl.UTF-8):   Usługi dla ircd-hybrid
+Summary(pl.UTF-8):	Usługi dla ircd-hybrid
 Name:		ircd-hybrid-services
 Version:	1.0
 Release:	0.1
